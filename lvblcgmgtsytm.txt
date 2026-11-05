@@ -1,0 +1,302 @@
+LOVABLE PROTOTYPE BUILD BRIEF
+Change intake and workflow prototype
+
+PURPOSE AND SCOPE
+
+Build a clickable prototype of a change intake and workflow tool for the commercial division of a large bank. One tool handles changes from the initial idea through closure. A change is anything that alters how employees or clients work, including a product, process, system, policy, or organization change.
+
+The prototype supports a project team workshop. Make it feel realistic using only fictional people and records. It has no login, real integrations, or AI features. Simulate external interactions and label them clearly as simulated. Persist demo data in browser local storage. Include a Reset demo button that restores the starting sample data.
+
+Use the requirements below as the build specification. The final section identifies damaged source wording that must not be treated as a confirmed rule.
+
+1. VISUAL DESIGN AND APPLICATION SHELL
+
+Use the Wells Fargo brand kit if it is available in the project. Otherwise use this fallback:
+- White backgrounds, very dark text, and a clean corporate banking appearance.
+- Deep red for the logo area, primary buttons, active navigation item, and key numbers.
+- Warm gold for highlights and keyboard focus.
+- Light warm gray content bands with white cards, square corners, and no shadows.
+- Semibold, sentence-case headings.
+- Readable tables, consistent spacing, heading sizes, and status chips.
+- Text and icons alongside status colors. Never communicate status through color alone.
+- A Presenter mode toggle that enlarges text for a projector.
+
+The header includes a role switcher, global search, a notification bell with unread count, and Reset demo. Left navigation includes Home, Start a change request, Triage, Records, Dashboard, Reports, and Notifications. Show a fictional-data banner on every page and a footer reading: "Prototype. All data is fictional."
+
+2. ROLES AND FICTIONAL PEOPLE
+
+Support five roles and an All roles view:
+- Submitter: proposes a change, answers plain-language questions, sees next steps, and tracks their requests.
+- Initiative lead: completes phase forms and governance packages; manages change events, risks, health, milestones, and closure.
+- Admin: reviews intake, classifies requests, sets complexity, records gate decisions, performs data quality checks, and reviews readiness.
+- Division leader: views the portfolio and executive reports.
+- System: represents the automated workflow engine. List pending automatic steps with Run buttons so a presenter can demonstrate automation.
+- All roles: enables actions across roles while retaining workflow prerequisites. Tag each action with its owning role.
+
+Use these fictional people:
+- Submitter: Rowan Ashby.
+- Initiative lead: Imani Castell.
+- Admin: Theo Marchetti.
+- Division leader: Dana Wickham.
+- Accountable sponsor: Avery Land.
+- Finance reviewer: Quinn Hall.
+- Change executive: Morgan Trent.
+- Change leader: Sasha Dell.
+- Readiness approvers: Reese Carter and Parker Nguyen.
+Add six more fictional people for pick lists. Some names have been normalized from phonetic transcription; their spelling is demo content, not a business rule.
+
+3. RECORD MODEL
+
+There are three record levels:
+- Change initiative: the top-level umbrella for complex work.
+- Output: a manageable piece of work and the main working record.
+- Change event: a specific delivery moment for an output, such as a pilot or rollout wave. Create change events inside outputs, never through intake.
+
+Complex work uses initiative, output, and change event. Non-complex work uses output and change event. Support partner-owned initiatives and related outputs.
+
+Store initiatives, outputs, change events, requests, people, notifications, activity entries, notes, risks, impediments, dependencies, milestones, tasks, approval decisions, benefits, indicators, and simulated documents in local storage.
+
+Use IDs such as OUT-1001 for outputs, C-20001 for change events, REQ-26-0101 for requests, and WR-12345 for readiness work requests.
+
+4. LIFECYCLE AND ROUTING
+
+Lifecycle stages:
+- Intake.
+- Routing.
+- Phase 1: Strategy and problem definition.
+- Phase 2: Impact and readiness assessment.
+- Phase 3: Solution and adoption design.
+- Phase 4: Delivery and transition.
+- Phase 5: Value realization and continuous improvement.
+
+Communication-only requests are logged and directed to a separate communications request tool through a simulated handoff. They stop there.
+
+An incomplete request containing only the title, what is changing, and the problem/why now is saved as an idea. The submitter can return to finish it.
+
+The admin classifies requests as:
+- Idea: retain in the idea queue.
+- Does not meet the definition of change: cancel and notify the submitter.
+- Meets the definition of change: set workflow status to Active, then determine complexity.
+
+Require a rationale for classification. Complex work has high impact, elevated risk, broad scope, or major dependencies. Examples include funding needs, multiple affected businesses, regulatory issues, and new products.
+
+Enterprise portfolio designation is separate from complexity. The system designates work as enterprise portfolio if it:
+- Needs funding.
+- Is driven by a law or regulatory issue.
+- Comes from a strategic plan.
+- Involves a new product launch.
+- Aligns to an existing initiative.
+Always explain which answers triggered the designation. A new product launch triggers a simulated notification to the new product review team.
+
+Complex Phase 1 path:
+1. Initiative lead completes Phase 1 data entry and the governance package.
+2. Apply the finance review rule below.
+3. Obtain a tollgate decision.
+4. Resolve all approval conditions before advancing.
+5. If funding is needed, complete investment planning.
+6. If no existing initiative exists, the admin sets up an initiative in the simulated enterprise change registry in Draft status.
+7. Run the data quality check.
+8. A failed check returns work to the lead. A passed check advances to Phase 2; enterprise portfolio work is also sent to the simulated registry.
+
+Non-complex Phase 1 path:
+Skip finance review, tollgate, and investment planning. Go from completed Phase 1 data entry directly to data quality checking, then Phase 2 on a pass. Do not create an initiative for this two-level path.
+
+Later phases:
+- Phase 2: create change events and record stakeholders, impacts, risks, impediments, dependencies, and health.
+- Phase 3: identify communications, training, procedure, and portal-content readiness needs. Admin readiness approval creates a simulated work request.
+- Phase 4: sponsor and every readiness approver mark each event ready for launch. High-risk events also require an admin-granted permit to deliver.
+- Phase 5: record benefits and indicator results, lessons learned, and a sponsor-approved closure memo. Complete the output automatically when every change event is delivered, benefits are complete, and the closure memo is approved.
+
+5. STATUSES AND BUSINESS RULES
+
+Confirmed status sets:
+- Workflow: New, Active, On hold, Deferred, Cancelled, Complete.
+- Tollgate: Ready for tollgate, Approved, Conditionally approved, Not approved.
+- Investment planning: Ready, Approved, Deferred.
+- Finance review: Not required, Requested, Approved, Returned.
+- Data quality: Pending, Failed, Passed.
+- Health: Green, Yellow, Red.
+- Initiative: Draft and Active are explicitly required.
+
+Business rules:
+- Complexity can be reclassified only once, during Phase 1 or Phase 2. Return the workflow to the complexity decision and preserve all existing data. Explain why reclassification is unavailable when blocked.
+- Yellow or Red health requires at least one open impediment and a health note. Show a go-to-green date and recovery plan. Notify the sponsor and lead; for complex work also notify the change executive and change leader.
+- Automatically flag at-risk milestones and show the reason. The sample whose due date moved 35 days must be at risk. The general date thresholds were damaged in transcription; see the final section.
+- Complex outputs start with eight default milestone entries: Plan the solution; Develop the solution; Test the solution; Launch readiness and sponsor approval; Implement the solution; Go live; Validate the solution; Sustain and close. The grouping of launch readiness and sponsor approval is provisional to preserve the stated count of eight.
+- Non-complex outputs start with an empty milestone plan.
+- A confidential output makes its initiative and change events confidential. Show a lock and exclude confidential records from unauthorized dashboards, search results, and reports. A confidential change event links to only one output. Use role/person-aware demo visibility; see the final section for the unspecified access policy.
+- Business data can be edited only while workflow status is Active, On hold, or Deferred. Keep intake drafting and submission functional before an output is active.
+- Capture approval dates automatically when a decision is made. Never ask users to type approval dates.
+- Write every change to an immutable activity history with actor, timestamp, old value, and new value. Label automatic actions as System.
+- Notes can be edited by their author until the end of the day; then they lock.
+
+6. INTAKE WIZARD
+
+Use guided question pages, a progress indicator, autosave, a "Why we ask this" hint under each question, and a Check your answers page with links to edit answers.
+
+Ask first: "Is this request for communication only and not part of a broader initiative?" Yes leads to the communication-only log and handoff page.
+
+Next ask whether the work aligns to an existing change initiative. Yes shows a searchable initiative list.
+
+Chapter 1: What is changing?
+- Title.
+- What is the change? Limit 250 characters with a live counter.
+- What problem are we trying to solve, and why now?
+- What is the impact if this is not pursued? Limit 250 characters.
+
+Chapter 2: People and businesses.
+- Requesting business.
+- Impacted businesses.
+- Initiative lead.
+- Key contact.
+- Accountable sponsor.
+
+Chapter 3: Sensitivity and funding.
+- Is the change confidential?
+- Does it need funding?
+- Will risk or control areas be impacted?
+- Impact categories, multi-select: Employee, Customer, Data and reporting, Legal entity, Policy, Privacy, Third-party providers, Other.
+- If Employee is selected, ask which roles are affected and how.
+- If Customer is selected, ask for a description of customer impact.
+
+Chapter 4: Drivers and category.
+- Primary drivers, multi-select: Efficiency, Regulatory mandate, Non-regulatory mandate, Operational, Organizational, Strategic, Client experience.
+- Efficiency: ask about time or cost savings and an estimate.
+- Regulatory mandate: ask whether a new/changing law drives it and whether it relates to an open regulatory issue.
+- Strategic: ask which strategic priority it supports.
+- Category of change, including new product launch, product change, and product retirement.
+- Does it involve a new or changed third-party supplier?
+
+Yes/no questions offer Yes, No, and Not sure yet. Include Other in pick lists where appropriate. On submission show the reference ID, routing outcome, next steps, and any enterprise portfolio triggers. Clearly identify a partial submission saved as an idea.
+
+7. ADMIN TRIAGE
+
+Tabs: New, Ideas, Cancelled, Communication only, Data quality, Readiness review. Each row shows request age, submitter, and flags for enterprise portfolio, new product, and confidentiality.
+
+Opening a request shows its intake answers beside a decision panel. First classify the request with a required rationale. For qualifying changes, select Complex or Non-complex using a characteristics checklist. Show enterprise portfolio triggers. Provide a new-product confirmation toggle and the simulated team notification. Apply the status, notification, activity, and reclassification rules.
+
+8. OUTPUT RECORD PAGE
+
+The header shows ID, name, workflow status, phase, complexity, enterprise portfolio designation, ownership by us or a partner, health, initiative lead, next gate, and confidentiality lock.
+
+Show a lifecycle path with Intake, Routing, applicable gates, and Phases 1-5. Highlight the current step and provide brief guidance. A Next actions panel shows actions appropriate to the current role and state; explain disabled prerequisites.
+
+Tabs: Overview, Details, Gates, Hierarchy, Risks and health, Milestones, Documents, Activity.
+
+Details contains plain-language phase forms grouped into sections, completion meters, and a Mark data entry complete action. Use sensible fictional fields for phase details not explicitly specified. Activity contains history and notes. Documents supports simulated uploads with version numbers. All sample requests and records must open in an appropriate view, including ideas, cancelled requests, and communication-only logs.
+
+9. FINANCE, TOLLGATE, INVESTMENT PLANNING, AND DATA QUALITY
+
+For complex work, Phase 1 includes benefits and indicators:
+- Benefits: name, type, owner.
+- Indicators: baseline, target, actual.
+- Hard benefit types: Expense reduction, Revenue growth.
+- Soft benefit types: Cost avoidance, Revenue protection.
+
+Finance review is needed when a listed financial benefit type is present and KPIs have been identified. Non-financial benefits do not require finance review. Show a simulated email to the finance reviewer with Approve and Return actions. Record actor, decision, and time.
+
+The tollgate package checklist covers risks, impediments, dependencies, stakeholder and impact analysis, and the change execution plan.
+
+The admin records Approved, Conditionally approved, or Not approved, always with rationale. Conditional approval requires conditions, a due date, and explicit admin confirmation that every condition is met before advancing. Not approved offers: Provide more detail and resubmit; Place on hold; Stop work. Notify the lead of outcomes and conditions being met.
+
+If approved work needs funding, set investment planning to Ready and show this checklist: Business case complete; Ability to deliver confirmed; Prioritized; Leadership reviewed. Outcomes are Approved or Deferred. Deferred sets workflow status to Deferred and places the output in a backlog view.
+
+For complex work without an existing initiative, the admin names an initiative manager and creates a Draft initiative in the simulated registry. Replace draft initiative references consistently across linked outputs. The lead can activate the initiative only when a change materiality assessment exists, sponsor and risk owners are named, and all outputs are tollgate approved. Show the activation checklist.
+
+Data quality checking shows completeness by section and Pass/Fail decisions with a note. Fail returns to the lead. Pass advances to Phase 2 and, for enterprise portfolio work, simulates sending the record to the registry.
+
+10. HIERARCHY, EVENTS, RISKS, HEALTH, AND MILESTONES
+
+Hierarchy shows initiative/output/event trees with status and health. For non-complex work show only outputs and events. Allow leads to relate outputs with a note.
+
+Leads can add and copy change events. Required fields: Name, Description, Start date, End date, Impacted business lines. For partner-owned initiatives, partner events are read-only while our own impacting events remain editable.
+
+Change event tabs: Details, Impacts, Readiness plan, Work request, Validation and after-action review, Launch readiness, Activity.
+
+Risks and health contains three registers: Risks, Impediments, Dependencies. Each item includes name, description, Open/Closed status, impact type, owner, severity, and resolution. Support inline editing and the health rules.
+
+Milestones include start date, finish date, owner, percent complete, and notes. Support tasks under milestones, date-change history, and automatic at-risk explanations.
+
+11. READINESS, LAUNCH, AND CLOSURE
+
+In Phase 3, the lead lists event readiness needs for communications, training, procedures, and portal content. The admin marks the event Ready or Not ready in the readiness review queue. Ready creates a simulated work request and displays its ID on the Work request tab.
+
+In Phase 4, list the sponsor and each readiness approver with individual Ready actions. Notify everyone when all approvals are complete. For high-risk events the admin then grants the permit to deliver, using a system-generated date.
+
+In Phase 5, provide a closure memo with summary, results against indicators, lessons learned, and sponsor approval. When all events are delivered, benefits are complete, and the memo is approved, automatically set the output to Complete and explain why.
+
+12. NOTIFICATIONS, SEARCH, HOME PAGES, DASHBOARD, AND REPORTS
+
+Notifications has Priority and Other tabs. Each notification shows recipient, channel (In app or Simulated email), time, a short message, and a link to the exact record. Add subscription settings by event type, with some notifications required.
+
+Cover these notification events: Classification, Cancellation, Idea saved, New product review, Data entry complete, Finance requested, Tollgate outcome, Conditions met, Investment planning outcome, Initiative setup, Initiative activation, Data quality result, Yellow/Red health, Launch readiness complete, Output complete.
+
+Global search finds initiatives, outputs, and events by keyword, groups results by level, and respects confidentiality.
+
+Each role's Home page puts Needs my action first, followed by three or four metric cards and recent records. The System view exposes pending automation for demonstration.
+
+Dashboard includes metric cards, labeled bar charts by phase and health, and a filterable table. Saved views: All, Mine, At risk, Awaiting a gate, Communication only. Include a backlog view for Deferred outputs. Give charts a short text summary.
+
+Division leader reports:
+- Division change summary across initiatives, outputs, and events, with go-live date, lead, and sponsor filters.
+- Executive briefing that also includes partner-owned work.
+Both reports show a Data as of timestamp and simulated exports to Word, Excel, PowerPoint, and PDF.
+
+13. STARTING SAMPLE DATA
+
+All sample dates are in 2026. Fill unspecified details with believable fictional data consistent with the workflow. Give records suitable activity histories, notes, and matching notifications.
+
+1) New business case: Commercial document hub.
+Draft initiative with two outputs: Client document intake portal and Document retention rules engine. Complex, enterprise portfolio, funding required, new product launch, expense reduction benefits, and two indicators. Sponsor Avery Land; lead Imani Castell. Phase 1; tollgate package 80% complete. Events: Pilot launch for the first client segment, high risk, November 30; Full rollout, December 14.
+
+2) New output under an existing initiative: Supplier early payment dashboard.
+Existing Active initiative: Receivables finance growth. Complex, enterprise portfolio. Tollgate approved October 14; investment planning approved October 21. Phase 2, Yellow health. Open impediment: Data feed access pending. Milestone Business requirements approved is at risk because its due date moved 35 days. Include the required health note and recovery plan. Event: Dashboard release one, December 7.
+
+3) Non-complex change: Relationship coverage realignment pilot.
+Not enterprise portfolio; no funding. Phase 3. Events: Pilot book transfers, November 16, awaiting readiness review; Wave 2 transfers, December 7, copied from the first event.
+
+4) Complex change outside enterprise portfolio: Credit memo template refresh.
+No funding; non-financial benefits; finance review not required. Tollgate Conditionally approved October 28. Condition: Confirm credit policy owner sign-off, due November 6. Events November 20 and December 11. Remain at the conditional approval gate until the condition is confirmed met.
+
+5) Partner-owned initiative: Partner card platform upgrade.
+Partner initiative is read-only. Our output: Client servicing readiness for the partner card platform upgrade. Complex, enterprise portfolio, Phase 4. Event: Servicing go-live, high risk, November 23. Sponsor is ready; one of two readiness approvers is ready; permit to deliver is pending.
+
+6) Partner-led non-complex change: Account analysis statement migration.
+Phase 5. Both events delivered October 19 and October 30. Indicators complete. Closure memo awaits sponsor approval, so output remains incomplete.
+
+7) Organization realignment: Q4 coverage book rebalancing.
+Confidential, non-complex, Phase 2. Event December 1. Show a lock and hide from unauthorized views.
+
+8) Communication-only request: Holiday service hours notice for commercial clients.
+Appears only in the communication-only log, dated October 27.
+
+9) Idea: Shared calendar of client events.
+In the idea queue since October 20. Only title, what is changing, and the problem/why now are answered.
+
+10) Does not meet the definition of change: Update team distribution list.
+Cancelled October 22. Rationale: Routine admin task, not a change.
+
+11) New triage request: Commercial card limit increase workflow.
+Submitted two days before the demo reference date. Impacts employees and customers; awaiting admin classification. "Workflow" is a contextual correction of the transcribed "workforce" and is editable demo wording.
+
+Treat these as eleven demo scenarios, not necessarily eleven database rows. The first scenario contains multiple outputs. Show an overview table with the stage and status of each scenario.
+
+14. BUILD COMPLETION AND VALIDATION
+
+Implement the full prototype described above. Build in manageable stages if needed, retaining one coherent data model and working navigation.
+
+Verify:
+- Full intake submission and partial idea saving.
+- Communication-only routing and cancellation.
+- Complex versus non-complex paths and enterprise portfolio trigger explanations.
+- Finance review, conditional tollgate approval, funding approval/deferral, initiative setup, and data quality return/pass.
+- One-time complexity reclassification and preservation of data.
+- Event creation/copying, partner read-only boundaries, and confidentiality.
+- Health prerequisites and notifications; milestone risk reasons.
+- Readiness work requests, individual launch approvals, and high-risk permits.
+- Closure remains blocked until sponsor approval, then completes automatically when all conditions are satisfied.
+- Role-specific actions, System Run controls, history, notes, notifications, search, dashboards, reports, local persistence, and Reset demo.
+
+Walk through each scenario as Submitter, Admin, Initiative lead, Division leader, System, and All roles. Fix inconsistencies in stage, statuses, prerequisites, and available actions. Provide concise instructions for testing the completed prototype and identify any unresolved requirements.
+
+Keep any provisional assumptions in a small demo assumptions/help area so the workshop team can review them. None of these uncertainties should prevent building the recoverable prototype behavior.
